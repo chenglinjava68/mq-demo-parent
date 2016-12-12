@@ -72,9 +72,11 @@ public class RedisUtilsTest {
         RedisUtils.setbit("simple_setbit",1,true);
         assertFalse(RedisUtils.getbit("simple_setbit",2));
         assertTrue(RedisUtils.getbit("simple_setbit",1));
-
-
+        RedisUtils.setbit("simple_setbit",2,true);
+        RedisUtils.setbit("simple_setbit",3,true);
+        assertEquals(RedisUtils.bitcount("simple_setbit").longValue(),3L);
     }
+
 
 
 

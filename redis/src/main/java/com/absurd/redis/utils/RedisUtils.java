@@ -253,6 +253,37 @@ public class RedisUtils {
         }
         return intReply;
     }
+
+    public static Long bitcount(String keyname){
+        Long intReply = 0L;
+        assert ! lockJedis.isHeldByCurrentThread();
+        lockJedis.lock();
+        Jedis jedis = null;
+        try {
+            jedis = getJedis();
+            intReply =   jedis.bitcount(keyname);
+        } finally {
+            if ( jedis != null ) closeResource(jedis);
+            lockJedis.unlock();
+        }
+        return intReply;
+    }
+
+    public static Long bitcount(String keyname,int start,int end){
+        Long intReply = 0L;
+        assert ! lockJedis.isHeldByCurrentThread();
+        lockJedis.lock();
+        Jedis jedis = null;
+        try {
+            jedis = getJedis();
+            intReply =   jedis.bitcount(keyname,start,end);
+        } finally {
+            if ( jedis != null ) closeResource(jedis);
+            lockJedis.unlock();
+        }
+        return intReply;
+    }
+
     public static Boolean getbit(String keyname,long offset){
         Boolean intReply = false;
         assert ! lockJedis.isHeldByCurrentThread();
