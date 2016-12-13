@@ -195,6 +195,28 @@ public class RedisUtils {
         return result;
     }
 
+    public static int decr(String keyname) {
+        assert ! lockJedis.isHeldByCurrentThread();
+        lockJedis.lock();
+        Jedis jedis = null;
+        int result = -1;
+        long value = -1;
+
+        try {
+            jedis = getJedis();
+            value = jedis.decr(keyname);
+            result = (int)value;
+        } finally {
+            if ( jedis != null ) closeResource(jedis);
+            lockJedis.unlock();
+        }
+
+        if ( result != value )
+            throw new IllegalArgumentException("Out of range: " + value);
+
+        return result;
+    }
+
     public static boolean exists(String keyname) {
         assert ! lockJedis.isHeldByCurrentThread();
         lockJedis.lock();

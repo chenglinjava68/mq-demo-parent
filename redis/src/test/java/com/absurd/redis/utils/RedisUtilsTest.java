@@ -77,9 +77,32 @@ public class RedisUtilsTest {
         assertEquals(RedisUtils.bitcount("simple_setbit").longValue(),3L);
     }
 
+    @Test
+    public void use_bit_in_sign(){
+      boolean flag =  sign(1,"2016-12-01","2016-12-03","2016-12-05","2016-12-06","2016-12-07");
+        assertTrue(isSign(1,"2016-12-03"));
+        assertFalse(isSign(1,"2016-12-04"));
 
+    }
 
+    private boolean isSign(int uid, String time) {
+        StringBuilder sbf = new StringBuilder();
+        sbf.append(uid);
+        int ltIndex=  time.lastIndexOf("-");
+        sbf.append("|").append(time.substring(0,ltIndex));
+        return   RedisUtils.getbit(sbf.toString(),Integer.valueOf(time.substring(ltIndex+1)));
+    }
 
+    private boolean sign(int uid, String ...times) {
+        int length = times.length;
+        for(int i=0;i<length;i++){
+           int ltIndex=  times[i].lastIndexOf("-");
+           String token = uid+"|"+times[i].substring(0,ltIndex);
+            RedisUtils.setbit(token,Integer.valueOf(times[i].substring(ltIndex+1)),true);
+        }
+
+        return false;
+    }
 
 
 }
