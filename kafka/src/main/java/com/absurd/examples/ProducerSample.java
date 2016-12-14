@@ -4,11 +4,15 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 
 import java.util.Collections;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by wangwenwei on 16/11/26.
@@ -16,8 +20,7 @@ import java.util.Properties;
 public class ProducerSample {
     public static void main(String[] args) {
 
-
-
+        final  AtomicInteger  count =  new AtomicInteger(0);
 
 
         Thread t =  new Thread(new Runnable() {
@@ -30,7 +33,9 @@ public class ProducerSample {
 
                 KafkaProducer<Integer, String> producer = new KafkaProducer<Integer, String>(props);
                 while(true){
-                    producer.send(new ProducerRecord<Integer, String>(KafkaProperties.TOPIC,1,"msg"));
+                    producer.send(new ProducerRecord<Integer, String>(KafkaProperties.TOPIC,count.get(),"msg"),
+                            new DemoCallBack(System.currentTimeMillis(),count.incrementAndGet(),"msg"));
+
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
@@ -66,9 +71,37 @@ public class ProducerSample {
         });
         t2.start();
         t.start();
+        t.start();
+        t.start();
 
 
 
 
     }
+
+    static class DemoCallBack implements Callback {
+        private final long startTime;
+        private final int key;
+        private final String message;
+        public DemoCallBack(long startTime, int key, String message) {
+            this.startTime = startTime;
+            this.key = key;
+            this.message = message;
+        }
+
+        @Override
+        public void onCompletion(RecordMetadata metadata, Exception exception) {
+            long elapsedTime = System.currentTimeMillis() - startTime;
+            if (metadata != null) {
+                System.out.println(
+                        "message(" + key + ", " + message + ") sent to partition(" + metadata.partition() +
+                                "), " +
+                                "offset(" + metadata.offset() + ") in " + elapsedTime + " ms");
+            } else {
+                exception.printStackTrace();
+            }
+        }
+    }
+
 }
+
