@@ -621,17 +621,6 @@ public class RedisUtils {
         return statusCodeReply;
     }
 
-    public static Long   publish(String channel, String message){
-        Long statusCodeReply = 0L;
-        Jedis jedis = null;
-        try {
-            jedis = getJedis();
-            statusCodeReply =  jedis.publish(channel,message);
-        } finally {
-            if ( jedis != null ) closeResource(jedis);
-        }
-        return statusCodeReply;
-    }
 
     public static void   subscribe(String... channels){
         Jedis jedis = null;
