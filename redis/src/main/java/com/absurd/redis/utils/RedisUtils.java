@@ -27,8 +27,6 @@ import redis.clients.jedis.JedisPubSub;
  * @date 2016/12/12 18:53
  */
 public class RedisUtils {
-
-
     private static Logger logger = LoggerFactory.getLogger(RedisUtils.class);
     public static ConcurrentHashMap<String, JedisPool> pools = new ConcurrentHashMap<>();
     protected static String DEFAULT_ADDRESS = "127.0.0.1";
