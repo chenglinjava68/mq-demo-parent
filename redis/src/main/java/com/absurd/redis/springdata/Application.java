@@ -12,6 +12,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author <a href="mailto:wangwenwei@myhexin.com">王文伟</a>
@@ -21,6 +22,7 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
  * @Description:
  * @date 2016/12/15 13:42
  */
+@EnableScheduling
 @SpringBootApplication
 public class Application  extends SpringBootServletInitializer {
 
