@@ -4,10 +4,12 @@ import com.absurd.redis.springdata.listen.RedisMessageListener;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
@@ -23,6 +25,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @date 2016/12/15 13:42
  */
 @EnableScheduling
+@ComponentScan("com.absurd")
 @SpringBootApplication
 public class Application  extends SpringBootServletInitializer {
 
