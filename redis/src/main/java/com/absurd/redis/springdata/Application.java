@@ -14,11 +14,11 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * @author <a href="mailto:wangwenwei@myhexin.com">王文伟</a>
- * @Company:浙江核新同花顺网络信息股份有限公司
+ * @author <a href="mailto:www_1350@163.com">王文伟</a>
  * @Title: mq-demo-parent
  * @Package com.absurd.redis.springdata
  * @Description:
@@ -26,6 +26,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @EnableScheduling
 @ComponentScan("com.absurd")
+@EnableAsync
 @SpringBootApplication
 public class Application  extends SpringBootServletInitializer {
 

@@ -25,8 +25,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 /**
- * @author <a href="mailto:wangwenwei@myhexin.com">王文伟</a>
- * @Company:浙江核新同花顺网络信息股份有限公司
+ * @author <a href="mailto:www_1350@163.com">王文伟</a>
  * @Title: mq-demo-parent
  * @Package com.absurd.redis.springdata
  * @Description:
