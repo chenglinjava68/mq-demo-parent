@@ -10,8 +10,13 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
-import org.springframework.data.redis.serializer.GenericToStringSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.data.redis.serializer.*;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+
+import javax.xml.bind.Marshaller;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:www_1350@163.com">王文伟</a>
@@ -30,10 +35,12 @@ public class RedisConfig {
         final RedisTemplate<String, Object> template =  new RedisTemplate<String,Object>();
         template.setConnectionFactory( jedisConnectionFactory );
         template.setKeySerializer( new StringRedisSerializer() );
-        template.setHashValueSerializer( new GenericToStringSerializer<Object>( Object.class ) );
-        template.setValueSerializer( new GenericToStringSerializer<Object>( Object.class ) );
+        template.setHashValueSerializer( new Jackson2JsonRedisSerializer<Object>( Object.class ) );
+        template.setValueSerializer( new Jackson2JsonRedisSerializer<Object>(Object.class) );
         return template;
     }
+
+
 
     @Bean
     protected MessageListenerAdapter messageListener() {
@@ -45,8 +52,7 @@ public class RedisConfig {
         final RedisMessageListenerContainer container = new RedisMessageListenerContainer();
 
         container.setConnectionFactory( jedisConnectionFactory );
-        container.addMessageListener( messageListener(), topic() );
-
+        container.addMessageListener( messageListener(), Arrays.asList(topic(),topic2()) );
         return container;
     }
 
@@ -54,5 +60,14 @@ public class RedisConfig {
     protected ChannelTopic topic() {
         return new ChannelTopic( "user:topic1" );
     }
+
+
+
+    @Bean
+    protected ChannelTopic topic2() {
+        return new ChannelTopic( "user:topic2" );
+    }
+
+
 
 }

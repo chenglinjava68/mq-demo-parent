@@ -1,13 +1,18 @@
 package com.absurd.redis.springdata.async;
 
 import com.absurd.redis.springdata.web.SampleController;
+import com.absurd.redis.thread.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.Future;
 
 /**
@@ -16,6 +21,11 @@ import java.util.concurrent.Future;
 @Component
 public class AsyncService {
     private static Logger logger = LoggerFactory.getLogger(AsyncService.class);
+
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
     @Async
     public void asyncMeth() {
         try {
@@ -37,5 +47,12 @@ public class AsyncService {
         }
         return null;
 
+    }
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+
+    @Async
+    public Future<String> asyncPublisher(String channel ) {
+            stringRedisTemplate.convertAndSend(channel, "发布一个项目" + Publisher.atomicInteger.incrementAndGet() + "The time is now " + dateFormat.format(new Date()));
+            return new AsyncResult<String>("OK");
     }
 }
