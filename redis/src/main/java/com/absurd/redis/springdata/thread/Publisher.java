@@ -1,4 +1,4 @@
-package com.absurd.redis.thread;
+package com.absurd.redis.springdata.thread;
 
 
 import com.absurd.redis.springdata.async.AsyncService;
@@ -6,26 +6,20 @@ import com.absurd.redis.springdata.dto.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import javax.annotation.PostConstruct;
 
 /**
  * @author <a href="mailto:www_1350@163.com">王文伟</a>
  * @Title: mq-demo-parent
- * @Package com.absurd.redis.thread
+ * @Package com.absurd.redis.springdata.thread
  * @Description:
  * @date 2016/12/15 20:23
  */
@@ -54,7 +48,7 @@ public class Publisher {
         });
        }
 
-    @Scheduled(fixedDelay = 1000L)
+//    @Scheduled(fixedDelay = 1000L)
     public void tt(){
         while(true){
             taskExecutor.execute(()->{

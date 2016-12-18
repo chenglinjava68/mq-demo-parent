@@ -1,11 +1,9 @@
 package com.absurd.redis.springdata.async;
 
-import com.absurd.redis.springdata.web.SampleController;
-import com.absurd.redis.thread.Publisher;
+import com.absurd.redis.springdata.thread.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;

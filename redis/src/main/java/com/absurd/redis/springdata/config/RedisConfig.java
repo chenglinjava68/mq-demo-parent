@@ -35,6 +35,7 @@ public class RedisConfig {
         final RedisTemplate<String, Object> template =  new RedisTemplate<String,Object>();
         template.setConnectionFactory( jedisConnectionFactory );
         template.setKeySerializer( new StringRedisSerializer() );
+        template.setDefaultSerializer(new Jackson2JsonRedisSerializer<Object>( Object.class ) );
         template.setHashValueSerializer( new Jackson2JsonRedisSerializer<Object>( Object.class ) );
         template.setValueSerializer( new Jackson2JsonRedisSerializer<Object>(Object.class) );
         return template;

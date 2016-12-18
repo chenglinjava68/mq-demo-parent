@@ -1,11 +1,10 @@
 package com.absurd.redis.springdata.web;
 
 import com.absurd.redis.springdata.async.AsyncService;
-import com.absurd.redis.thread.Publisher;
+import com.absurd.redis.springdata.thread.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
