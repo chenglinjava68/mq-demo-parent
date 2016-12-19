@@ -30,6 +30,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <jedis.version>2.9.0</jedis.version>
+        <rabbitmq.version>4.0.0</rabbitmq.version>
         <slf4j.version>1.7.22</slf4j.version>
         <logback.version>1.1.8</logback.version>
         <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
@@ -81,6 +82,12 @@
                 <artifactId>jedis</artifactId>
                 <version>${jedis.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.rabbitmq</groupId>
+                <artifactId>amqp-client</artifactId>
+                <version>${rabbitmq.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
