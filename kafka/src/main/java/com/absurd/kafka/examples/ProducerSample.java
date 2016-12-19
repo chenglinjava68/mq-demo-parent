@@ -1,4 +1,4 @@
-package com.absurd.examples;
+package com.absurd.kafka.examples;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -12,7 +12,6 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import java.util.Collections;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by wangwenwei on 16/11/26.

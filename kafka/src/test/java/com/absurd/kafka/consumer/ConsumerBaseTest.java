@@ -1,9 +1,8 @@
 package com.absurd.kafka.consumer;
 
-import com.absurd.examples.KafkaProperties;
-import com.absurd.examples.User;
+import com.absurd.kafka.examples.KafkaProperties;
+import com.absurd.kafka.examples.User;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.junit.Test;
 
 import java.util.Properties;

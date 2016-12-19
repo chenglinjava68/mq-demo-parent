@@ -1,4 +1,4 @@
-package com.absurd.examples;
+package com.absurd.kafka.examples;
 
 /**
  * Created by wangwenwei on 16/11/27.

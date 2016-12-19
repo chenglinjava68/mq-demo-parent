@@ -1,4 +1,4 @@
-package com.absurd.examples;
+package com.absurd.kafka.examples;
 
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;

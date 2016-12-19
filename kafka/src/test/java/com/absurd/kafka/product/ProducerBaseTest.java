@@ -1,7 +1,7 @@
 package com.absurd.kafka.product;
 
-import com.absurd.examples.KafkaProperties;
-import com.absurd.examples.User;
+import com.absurd.kafka.examples.KafkaProperties;
+import com.absurd.kafka.examples.User;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.junit.Test;
 

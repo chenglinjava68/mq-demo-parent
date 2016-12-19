@@ -1,6 +1,6 @@
 package com.absurd.kafka.consumer;
 
-import com.absurd.examples.KafkaProperties;
+import com.absurd.kafka.examples.KafkaProperties;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
 import kafka.serializer.Decoder;

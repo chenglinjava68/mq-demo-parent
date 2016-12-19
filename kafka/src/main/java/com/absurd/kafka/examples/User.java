@@ -1,4 +1,4 @@
-package com.absurd.examples;
+package com.absurd.kafka.examples;
 
 import java.io.Serializable;
 
