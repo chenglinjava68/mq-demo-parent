@@ -22,12 +22,9 @@ public class Producter {
         UserDTO userDTO = new UserDTO(id.longValue(),"www","fdsf","福建","34234",323423532L);
         String queueName = "userQueue";
         redisTemplate.opsForList().leftPush(queueName,userDTO);
-        UserDTO userDTO1 = new UserDTO(id.longValue(),"ww1","fdsf","台湾","34234",323423532L);
-        UserDTO userDTO2 = new UserDTO(id.longValue(),"ww2","fdsf","泰国","34234",323423532L);
 
-        //分数小的在头部
-        redisTemplate.opsForZSet().add("uQue",userDTO1,0.6);
-        redisTemplate.opsForZSet().add("uQue",userDTO2,0.3);
+
+
     }
 
 }
