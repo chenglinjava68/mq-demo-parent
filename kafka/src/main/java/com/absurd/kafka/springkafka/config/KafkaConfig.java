@@ -1,6 +1,7 @@
 package com.absurd.kafka.springkafka.config;
 
 import com.absurd.kafka.springkafka.model.UserDTO;
+import com.absurd.kafka.springkafka.thread.Producter;
 
 import org.I0Itec.zkclient.ZkClient;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -116,6 +117,12 @@ public class KafkaConfig {
 
     }
 
+
+    /***
+     * 默认转成json，不能适用所有类。需要手动转参考
+     * {@link Producter#product()}
+     * @return
+     */
     @Bean
     public ProducerFactory<String, ?> kafkaProducerFactory() {
         Map<String, Object> producerProperties = new HashMap<>();
@@ -138,6 +145,11 @@ public class KafkaConfig {
         return factory;
     }
 
+    /***
+     * 默认json读
+     * {@link com.absurd.kafka.springkafka.listener.KafkaRecListener#processMessage(UserDTO)}
+     * @return
+     */
     @Bean
     public ConsumerFactory<String, Object> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
@@ -156,6 +168,13 @@ public class KafkaConfig {
     }
 
 
+    /****
+     * string读写,可以在读写的地方自己序列化/反序列化
+     * {@link com.absurd.kafka.springkafka.listener.KafkaRecListener#processMessage3(String)}
+     * {@link Producter#product3()}
+     * @return
+     * @throws Exception
+     */
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaStringListenerContainerFactory() throws Exception {
         ConcurrentKafkaListenerContainerFactory<String, String> factory =
@@ -179,6 +198,13 @@ public class KafkaConfig {
     }
 
 
+    /***
+     * 定制化序列化
+     * {@link com.absurd.kafka.springkafka.listener.KafkaRecListener#processMessage2(UserDTO)}
+     * {@link Producter#product2()}
+     * @return
+     * @throws Exception
+     */
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, UserDTO> kafkaJsonListenerContainerFactory() throws Exception {
         ConcurrentKafkaListenerContainerFactory<String, UserDTO> factory =

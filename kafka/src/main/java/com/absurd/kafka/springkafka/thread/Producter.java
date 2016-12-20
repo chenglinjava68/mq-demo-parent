@@ -14,8 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaOperations;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.listener.MessageListener;
-import org.springframework.kafka.support.converter.MessagingMessageConverter;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -87,6 +85,7 @@ private static final ObjectMapper objectMapper = new ObjectMapper();
         });
 
 
+        //会根据key 的hash值去自动分区
         kafkaTemplate.execute(new KafkaOperations.ProducerCallback() {
             @Override
             public Object doInKafka(Producer producer) {
