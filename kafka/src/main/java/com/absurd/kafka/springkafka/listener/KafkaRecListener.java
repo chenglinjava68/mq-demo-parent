@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class KafkaRecListener {
     private static Logger logger = LoggerFactory.getLogger(Producter.class);
-    @KafkaListener(topics = "absurtopic")
+    @KafkaListener(topics = "absurtopic",group="myGroup")
     public void processMessage(String content) {
         logger.info(content);
     }

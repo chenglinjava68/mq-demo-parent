@@ -26,7 +26,7 @@ public class Producter {
     private KafkaTemplate kafkaTemplate;
 
 
-//    @Scheduled(cron = "0/1 * * * * ?")
+    @Scheduled(cron = "0/1 * * * * ?")
     public void product(){
         Integer id = atomicInteger.incrementAndGet();
         logger.info(id+"><");

@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.SmartLifecycle;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
@@ -28,14 +30,14 @@ import kafka.utils.ZKStringSerializer$;
 import kafka.utils.ZkUtils;
 
 /**
- * @author <a href="mailto:wangwenwei@myhexin.com">王文伟</a>
- * @Company:浙江核新同花顺网络信息股份有限公司
+ * @author <a href="mailto:www_1350@163.com">王文伟</a>
  * @Title: mq-demo-parent
  * @Package com.absurd.kafka.springkafka.config
  * @Description:
  * @date 2016/12/19 19:32
  */
 @Configuration
+@EnableKafka
 public class KafkaConfig {
 
     @Value("${kafka.broker.address}")
@@ -76,6 +78,7 @@ public class KafkaConfig {
             }
             catch (TopicExistsException e) {
                 // no-op
+                e.printStackTrace();
             }
             this.running = true;
         }
@@ -119,10 +122,12 @@ public class KafkaConfig {
         return new DefaultKafkaProducerFactory<Object, Object>(producerProperties);
     }
 
-/*    @Bean
-    public KafkaMessageListenerContainer<String, String> container() throws Exception {
-        return new KafkaMessageListenerContainer<>(consumerFactory(),
-                new ContainerProperties(new TopicPartitionInitialOffset("absurtopic", 0)));
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() throws Exception {
+        ConcurrentKafkaListenerContainerFactory<String, String> factory =
+                new ConcurrentKafkaListenerContainerFactory<String, String>();
+        factory.setConsumerFactory(consumerFactory());
+        return factory;
     }
 
     @Bean
@@ -136,6 +141,6 @@ public class KafkaConfig {
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         return new DefaultKafkaConsumerFactory<>(props);
-    }*/
+    }
 
 }
