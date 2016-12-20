@@ -154,6 +154,31 @@ public class KafkaConfig {
     public JsonDeserializer workUnitJsonDeserializer() {
         return new JsonDeserializer<Object>(Object.class);
     }
+
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaStringListenerContainerFactory() throws Exception {
+        ConcurrentKafkaListenerContainerFactory<String, String> factory =
+                new ConcurrentKafkaListenerContainerFactory();
+        factory.setConsumerFactory(consumerStringFactory());
+        factory.setMessageConverter(new StringJsonMessageConverter());
+        return factory;
+    }
+
+    @Bean
+    public ConsumerFactory<String, String> consumerStringFactory() {
+        Map<String, Object> props = new HashMap<>();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, this.brokerAddress);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "myGroup");
+        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
+        props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, 100);
+        props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, 15000);
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        return new DefaultKafkaConsumerFactory<>(props,new StringDeserializer(),new StringDeserializer());
+    }
+
+
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, UserDTO> kafkaJsonListenerContainerFactory() throws Exception {
         ConcurrentKafkaListenerContainerFactory<String, UserDTO> factory =
