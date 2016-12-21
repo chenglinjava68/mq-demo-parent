@@ -18,17 +18,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class KafkaRecListener {
     private static Logger logger = LoggerFactory.getLogger(Producter.class);
-    @KafkaListener(topics = "absurtopic2",group="myGroup",containerFactory = "kafkaJsonListenerContainerFactory")
+//    @KafkaListener(topics = "absurtopic2",group="myGroup",containerFactory = "kafkaJsonListenerContainerFactory")
     public void processMessage2(UserDTO content) {
         logger.info(content.toString());
     }
 
-    @KafkaListener(topics = "absurtopic",group="myGroup")
+//    @KafkaListener(topics = "absurtopic",group="myGroup")
     public void processMessage(UserDTO content) {
         logger.info(content.toString());
     }
 
-    @KafkaListener(topics = "absurtopic3",group="myGroup",containerFactory = "kafkaStringListenerContainerFactory")
+//    @KafkaListener(topics = "absurtopic3",group="myGroup",containerFactory = "kafkaStringListenerContainerFactory")
     public void processMessage3(String content) {
         logger.info(content.toString());
     }

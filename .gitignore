@@ -1,3 +1,6 @@
 *.iml
 .idea
 /redis/logs/
+/logs/
+/kafka/logs/
+/rabbitmq/logs/

@@ -33,9 +33,12 @@ public class Producter {
     @Autowired
     private KafkaTemplate kafkaTemplate;
 private static final ObjectMapper objectMapper = new ObjectMapper();
+    private ThreadLocal<Long> startTime = new ThreadLocal<Long>();
+    private ThreadLocal<Long> startBeTime = new ThreadLocal<Long>();
 
-
-    @Scheduled(cron = "0/1 * * * * ?")
+    @Scheduled(cron = "0/60 * * * * ?")
+    //3s
+    //14s (jackson 3s)
     public void product2()   {
         Integer id = atomicInteger.incrementAndGet();
         logger.info(id+">-------<");
@@ -46,9 +49,38 @@ private static final ObjectMapper objectMapper = new ObjectMapper();
         kafkaTemplate.send("absurtopic2",userDTO1);
         kafkaTemplate.send("absurtopic2",userDTO2);
 
+        StringBuilder sbf = new StringBuilder();
+        //5k
+//        for(int i=0;i<1000;i++)
+        //5M
+        for(int i=0;i<1000000;i++)
+            sbf.append("www");
+        userDTO.setUserName(sbf.toString());
+
+        startTime.set(System.currentTimeMillis());
+        startBeTime.set(System.currentTimeMillis());
+
+        for(int i=0;i<100000;i++) {
+            id = atomicInteger.incrementAndGet();
+            userDTO.setId(id.longValue());
+            kafkaTemplate.send("absurtopic2",userDTO);
+            if (id%10==0){
+                Long lo = startTime.get();
+                long elapsedTime = System.currentTimeMillis() - lo;
+                logger.info("take {} ms",  elapsedTime);
+                startTime.set(System.currentTimeMillis());
+            }
+        }
+        Long lo = startBeTime.get();
+        long elapsedTime = System.currentTimeMillis() - lo;
+
+        logger.info("ttoll take {} ms",  elapsedTime);
+
     }
 
-    @Scheduled(cron = "0/1 * * * * ?")
+//    @Scheduled(cron = "0/60 * * * * ?")
+    //3.4s
+    //12s (jackson 3s)
     public void product() throws JsonProcessingException {
         Integer id = atomicInteger.incrementAndGet();
         logger.info(id+"><");
@@ -59,10 +91,37 @@ private static final ObjectMapper objectMapper = new ObjectMapper();
         kafkaTemplate.send("absurtopic",objectMapper.writeValueAsString(userDTO1));
         kafkaTemplate.send("absurtopic",objectMapper.writeValueAsString(userDTO2));
 
+        StringBuilder sbf = new StringBuilder();
+        //5k
+        for(int i=0;i<1000;i++)
+            sbf.append("www");
+        userDTO.setUserName(sbf.toString());
+        startTime.set(System.currentTimeMillis());
+        startBeTime.set(System.currentTimeMillis());
+
+        for(int i=0;i<100000;i++) {
+            id = atomicInteger.incrementAndGet();
+            userDTO.setId(id.longValue());
+//            objectMapper.writeValueAsString(userDTO);
+            kafkaTemplate.send("absurtopic",objectMapper.writeValueAsString(userDTO));
+            if (id%10==0){
+                Long lo = startTime.get();
+                long elapsedTime = System.currentTimeMillis() - lo;
+                logger.info("take {} ms",  elapsedTime);
+                startTime.set(System.currentTimeMillis());
+            }
+        }
+        Long lo = startBeTime.get();
+        long elapsedTime = System.currentTimeMillis() - lo;
+
+        logger.info("ttoll take {} ms",  elapsedTime);
+
     }
 
 
-    @Scheduled(cron = "0/1 * * * * ?")
+//    @Scheduled(cron = "0/60 * * * * ?")
+    //2.3s
+    //3s
     public void product3()   {
         final Integer id = atomicInteger.incrementAndGet();
         logger.info(id+"><");
@@ -97,6 +156,43 @@ private static final ObjectMapper objectMapper = new ObjectMapper();
                 });
             }
         });
+
+        Integer id2 = id;
+
+        StringBuilder sbf = new StringBuilder();
+        //5k
+        for(int i=0;i<1000;i++)
+            sbf.append("www");
+        userDTO.setUserName(sbf.toString());
+
+        startTime.set(System.currentTimeMillis());
+        startBeTime.set(System.currentTimeMillis());
+
+        for(int i=0;i<100000;i++) {
+            id2 = atomicInteger.incrementAndGet();
+            userDTO.setId(id2.longValue());
+            kafkaTemplate.execute(new KafkaOperations.ProducerCallback() {
+                @Override
+                public Object doInKafka(Producer producer) {
+                    return producer.send(new ProducerRecord("absurtopic3", 0, "test",">>>>" + id + "<<"), new Callback() {
+                        @Override
+                        public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+//                            logger.info("----->>>>>>>"+ recordMetadata.partition()+"|"+recordMetadata.offset()+"<<<<<<<<<<<<<<<<------------");
+                        }
+                    });
+                }
+            });
+            if (id2%10==0){
+                Long lo = startTime.get();
+                long elapsedTime = System.currentTimeMillis() - lo;
+                logger.info("take {} ms",  elapsedTime);
+                startTime.set(System.currentTimeMillis());
+            }
+        }
+        Long lo = startBeTime.get();
+        long elapsedTime = System.currentTimeMillis() - lo;
+
+        logger.info("ttoll take {} ms",  elapsedTime);
 
     }
 }
