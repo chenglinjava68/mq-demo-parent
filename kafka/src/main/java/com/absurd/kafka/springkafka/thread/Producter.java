@@ -36,9 +36,12 @@ private static final ObjectMapper objectMapper = new ObjectMapper();
     private ThreadLocal<Long> startTime = new ThreadLocal<Long>();
     private ThreadLocal<Long> startBeTime = new ThreadLocal<Long>();
 
-    @Scheduled(cron = "0/60 * * * * ?")
-    //3s
-    //14s (jackson 3s)
+
+    //3s 106byte
+    //14s (jackson 3s) 3103byte 0.3k
+    //12000s  3000103byte  0.3M
+    // 10000 * 16s         27000103byte 3M
+    @Scheduled(cron = "0/6000 * * * * ?")
     public void product2()   {
         Integer id = atomicInteger.incrementAndGet();
         logger.info(id+">-------<");
@@ -50,12 +53,15 @@ private static final ObjectMapper objectMapper = new ObjectMapper();
         kafkaTemplate.send("absurtopic2",userDTO2);
 
         StringBuilder sbf = new StringBuilder();
-        //5k
+        //0.3k
 //        for(int i=0;i<1000;i++)
-        //5M
-        for(int i=0;i<1000000;i++)
-            sbf.append("www");
-        userDTO.setUserName(sbf.toString());
+        // 0.3M
+//        for(int i=0;i<1000000;i++)
+
+        // 3M
+//        for(int i=0;i<9000000;i++)
+//            sbf.append("www");
+//        userDTO.setUserName(sbf.toString());
 
         startTime.set(System.currentTimeMillis());
         startBeTime.set(System.currentTimeMillis());
@@ -78,9 +84,10 @@ private static final ObjectMapper objectMapper = new ObjectMapper();
 
     }
 
-//    @Scheduled(cron = "0/60 * * * * ?")
-    //3.4s
-    //12s (jackson 3s)
+
+    //3.4s 106byte
+    //12s (jackson 3s)  0.3k
+     @Scheduled(cron = "0/60 * * * * ?")
     public void product() throws JsonProcessingException {
         Integer id = atomicInteger.incrementAndGet();
         logger.info(id+"><");
@@ -93,7 +100,8 @@ private static final ObjectMapper objectMapper = new ObjectMapper();
 
         StringBuilder sbf = new StringBuilder();
         //5k
-        for(int i=0;i<1000;i++)
+//        for(int i=0;i<1000;i++)
+
             sbf.append("www");
         userDTO.setUserName(sbf.toString());
         startTime.set(System.currentTimeMillis());
@@ -119,9 +127,11 @@ private static final ObjectMapper objectMapper = new ObjectMapper();
     }
 
 
-//    @Scheduled(cron = "0/60 * * * * ?")
-    //2.3s
-    //3s
+    //2.3s 106byte
+    //14s  0.3k
+    //10000s  3000103byte  0.3M
+    // 10000 * 16s         27000103byte 3M
+    @Scheduled(cron = "0/6000 * * * * ?")
     public void product3()   {
         final Integer id = atomicInteger.incrementAndGet();
         logger.info(id+"><");
@@ -160,21 +170,24 @@ private static final ObjectMapper objectMapper = new ObjectMapper();
         Integer id2 = id;
 
         StringBuilder sbf = new StringBuilder();
-        //5k
-        for(int i=0;i<1000;i++)
+        //0.3k
+//        for(int i=0;i<1000;i++)
+//        for(int i=0;i<1000000;i++)
+//            for(int i=0;i<9000000;i++)
             sbf.append("www");
         userDTO.setUserName(sbf.toString());
-
+        final String aa = sbf.toString();
         startTime.set(System.currentTimeMillis());
         startBeTime.set(System.currentTimeMillis());
 
         for(int i=0;i<100000;i++) {
             id2 = atomicInteger.incrementAndGet();
-            userDTO.setId(id2.longValue());
+//            userDTO.setId(id2.longValue());
+
             kafkaTemplate.execute(new KafkaOperations.ProducerCallback() {
                 @Override
                 public Object doInKafka(Producer producer) {
-                    return producer.send(new ProducerRecord("absurtopic3", 0, "test",">>>>" + id + "<<"), new Callback() {
+                    return producer.send(new ProducerRecord("absurtopic3", 0, "test",aa), new Callback() {
                         @Override
                         public void onCompletion(RecordMetadata recordMetadata, Exception e) {
 //                            logger.info("----->>>>>>>"+ recordMetadata.partition()+"|"+recordMetadata.offset()+"<<<<<<<<<<<<<<<<------------");

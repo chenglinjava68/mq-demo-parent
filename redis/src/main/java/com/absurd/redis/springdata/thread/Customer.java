@@ -25,7 +25,7 @@ public class Customer {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Scheduled(initialDelay = 1000L,fixedRate = 3000L)
+//    @Scheduled(initialDelay = 1000L,fixedRate = 3000L)
     public void customer(){
         Integer id = Publisher.atomicInteger.incrementAndGet();
         String queueName = "userQueue";

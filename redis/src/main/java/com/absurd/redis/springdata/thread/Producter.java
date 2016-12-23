@@ -18,13 +18,25 @@ public class Producter {
     private ThreadLocal<Long> startBeTime = new ThreadLocal<Long>();
     @Autowired
     private RedisTemplate redisTemplate;
-    @Scheduled(cron = "0/60 * * * * ?")
-    //11s
+    @Scheduled(cron = "0/600 * * * * ?")
+    //250s
+    //297s
+    //13000s
+    //900000s
     public void product(){
         Integer id = Publisher.atomicInteger.incrementAndGet();
         UserDTO userDTO = new UserDTO(id.longValue(),"www","fdsf","福建","34234",323423532L);
 
         String queueName = "userQueue";
+
+        StringBuilder sbf = new StringBuilder();
+        //0.3k
+//        for(int i=0;i<1000;i++)
+//        for(int i=0;i<1000000;i++)
+            for(int i=0;i<9000000;i++)
+        sbf.append("www");
+        userDTO.setUserName(sbf.toString());
+
         startTime.set(System.currentTimeMillis());
         startBeTime.set(System.currentTimeMillis());
         for(int i=0;i<100000;i++) {

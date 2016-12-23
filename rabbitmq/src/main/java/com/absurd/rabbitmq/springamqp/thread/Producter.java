@@ -23,9 +23,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Producter {
     private static Logger logger = LoggerFactory.getLogger(Producter.class);
     public static AtomicInteger atomicInteger = new AtomicInteger();
+    private ThreadLocal<Long> startTime = new ThreadLocal<Long>();
+    private ThreadLocal<Long> startBeTime = new ThreadLocal<Long>();
     @Autowired
     private AmqpTemplate rabbitmqTemplate;
-    @Scheduled(cron = "0/1 * * * * ?")
+
+
+    //19s 106byte
+    //93s (jackson 3s) 3103byte 0.3k
+    //11000s  3000103byte  0.3M
+    //140000s 27000103byte 3M
+    @Scheduled(cron = "0/60000 * * * * ?")
     public void product(){
         Integer id = atomicInteger.incrementAndGet();
         logger.info(id+"><");
@@ -35,6 +43,35 @@ public class Producter {
         UserDTO userDTO2 = new UserDTO(id.longValue(),"ww2","fdsf","泰国","34234",323423532L);
         rabbitmqTemplate.convertAndSend("userQueueDir",userDTO1);
         rabbitmqTemplate.convertAndSend("userQueueDir",userDTO2);
+        StringBuilder sbf = new StringBuilder();
+        //0.3k
+//        for(int i=0;i<1000;i++)
+        // 0.3M
+//        for(int i=0;i<1000000;i++)
+
+        // 3M
+//        for(int i=0;i<9000000;i++)
+            sbf.append("www");
+        userDTO.setUserName(sbf.toString());
+
+        startTime.set(System.currentTimeMillis());
+        startBeTime.set(System.currentTimeMillis());
+
+        for(int i=0;i<100000;i++) {
+            id = atomicInteger.incrementAndGet();
+            userDTO.setId(id.longValue());
+            rabbitmqTemplate.convertAndSend("userQueueDir",userDTO);
+            if (id%10==0){
+                Long lo = startTime.get();
+                long elapsedTime = System.currentTimeMillis() - lo;
+                logger.info("take {} ms",  elapsedTime);
+                startTime.set(System.currentTimeMillis());
+            }
+        }
+        Long lo = startBeTime.get();
+        long elapsedTime = System.currentTimeMillis() - lo;
+
+        logger.info("ttoll take {} ms",  elapsedTime);
 
     }
 }

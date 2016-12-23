@@ -31,6 +31,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <kafka.version>0.10.1.0</kafka.version>
         <kafka.scala.version>2.11</kafka.scala.version>
+        <jafka.version>3.0</jafka.version>
         <avro.version>1.7.7</avro.version>
         <jedis.version>2.9.0</jedis.version>
         <rabbitmq.version>4.0.0</rabbitmq.version>
@@ -130,6 +131,12 @@
                 <version>${kafka.version}</version>
             </dependency>
             <!-- kafka end-->
+
+            <dependency>
+                <groupId>io.jafka</groupId>
+                <artifactId>jafka</artifactId>
+                <version>${jafka.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.apache.avro</groupId>
                 <artifactId>avro</artifactId>
