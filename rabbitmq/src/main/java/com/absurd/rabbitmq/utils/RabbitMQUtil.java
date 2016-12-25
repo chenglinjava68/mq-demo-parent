@@ -21,7 +21,7 @@ import java.util.concurrent.TimeoutException;
 
 public class RabbitMQUtil {
     private static Logger logger = LoggerFactory.getLogger(RabbitMQUtil.class);
-    private static final String        RABBITMQ_HOST          = "172.20.216.148";
+    private static final String        RABBITMQ_HOST          = "127.0.0.1";
     private static final String        RABBITMQ_PORT          = "5672";
     private static final String        RABBITMQ_VIRTUALHOST   = "/";
     private static final String        RABBITMQ_USERNAME      = "absurd";
