@@ -7,8 +7,10 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.io.File;
 
 /**
  * @author <a href="mailto:www_1350@163.com">王文伟</a>
@@ -19,6 +21,14 @@ import java.util.concurrent.Executors;
  */
 public class PushGetTest {
     private static Logger logger = LoggerFactory.getLogger(PushGetTest.class);
+    @Test
+    public void test2() throws IOException {
+        logger.info(this.getClass().getResource("").getPath());
+        logger.info(this.getClass().getClassLoader().getResource("").getPath());
+        File directory = new File("");//设定为当前文件夹
+        logger.info(directory.getCanonicalPath());
+        logger.info(directory.getAbsolutePath());
+    }
     @Test
     public void ps() throws InterruptedException {
         ExecutorService executorService = Executors.newFixedThreadPool(100);

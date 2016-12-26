@@ -158,8 +158,18 @@
             </dependency>
             <dependency>
                 <groupId>com.alibaba.rocketmq</groupId>
-                <artifactId>rocketmq-all</artifactId>
+                <artifactId>rocketmq-client</artifactId>
                 <version>${rocketmq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.rocketmq</groupId>
+                <artifactId>rocketmq-remoting</artifactId>
+                <version>${rocketmq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.rocketmq</groupId>
+                <artifactId>rocketmq-broker</artifactId>
+                <version>3.2.6</version>
             </dependency>
             <dependency>
                 <groupId>org.cloudhoist</groupId>
@@ -171,6 +181,53 @@
 
     <repositories>
         <repository>
+            <id>CN</id>
+            <name>OSChina Central</name>
+            <url>http://maven.oschina.net/content/groups/public/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>net-cn</id>
+            <name>Human Readable Name for this Mirror.</name>
+            <url>http://maven.net.cn/content/groups/public/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>central</id>
+            <name>Maven Repository Switchboard</name>
+            <layout>default</layout>
+            <url>http://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>sonatype</id>
+            <name>Sonatype Repository</name>
+            <url>http://repository.sonatype.org/content/groups/public/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>jboss</id>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>maven2</id>
+            <url>http://repo2.maven.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
             <id>repo.spring.io.milestone</id>
             <name>Spring Framework Maven Milestone Repository</name>
             <url>https://repo.spring.io/libs-milestone</url>
@@ -180,6 +237,7 @@
             <url>http://repo.spring.io/snapshot</url>
             <snapshots><enabled>true</enabled></snapshots>
         </repository>
+
         <repository>
             <id>spring-milestones</id>
             <url>http://repo.spring.io/milestone</url>
@@ -188,15 +246,6 @@
             <id>com.springsource.repository.bundles.release</id>
             <name>Spring Maven Repository Repository</name>
             <url>http://repository.springsource.com/maven/bundles/release</url>
-        </repository>
-        <repository>
-            <id>jboss</id>
-            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>sonatype</id>
-            <name>Sonatype Repository</name>
-            <url>http://repository.sonatype.org/content/groups/public/</url>
         </repository>
     </repositories>
     <pluginRepositories>

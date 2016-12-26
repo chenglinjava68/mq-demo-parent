@@ -45,7 +45,15 @@
         </dependency>
         <dependency>
             <groupId>com.alibaba.rocketmq</groupId>
-            <artifactId>rocketmq-all</artifactId>
+            <artifactId>rocketmq-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.rocketmq</groupId>
+            <artifactId>rocketmq-remoting</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.rocketmq</groupId>
+            <artifactId>rocketmq-broker</artifactId>
         </dependency>
     </dependencies>
 
