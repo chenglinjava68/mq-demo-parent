@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author <a href="mailto:wangwenwei@myhexin.com">王文伟</a>
+ * @author <a href="mailto:www_1350@163.com">王文伟</a>
  * @Title: mq-demo-parent
  * @Package com.absurd.kafka.springkafka.web
  * @Description:
